@@ -1,13 +1,4 @@
-
 *.gem
 .bundle
 Gemfile.lock
-pkg/*
-.DS_Store
-.AppleDouble
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
+.rvmrc
