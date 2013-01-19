@@ -1,13 +1,6 @@
 module Middleman
   module Navigation
     class Tree
-      DEFAULTS = {
-        hidden: false,
-        title: nil,
-        destination: nil,
-        weight: 0,
-      }
-
       def self.build(sitemap)
         app = sitemap.app
         root_path = app.http_prefix + app.index_file
@@ -26,12 +19,10 @@ module Middleman
         unless children.blank?
           navigation.items do |level|
             children.each do |child|
-              options = child.metadata[:page]['navigation']
-              title = options['title'] || child.data.title
-              url = options['destination'] || child.url
+              title = child.data.navigation[:title] || child.data.title
+              url = child.data.navigation[:destination] || child.url
 
               level.item child.destination_path, title, url
-
               traverse child, level
             end
           end
@@ -39,19 +30,10 @@ module Middleman
       end
 
       def self.visible_children(resource)
-        html = resource.children.select {|r| r.ext == '.html'}
-        # Reverse merge default options for menu candidates.
-        # TODO: This doesn't affect child.data, so we need to clear caching somehow.
-        # TODO: string/symbol keys are not handled well.
-        html.map do |child|
-          options = child.metadata[:page]
-          options['navigation'] ||= {}
-          options['navigation'] = DEFAULTS.stringify_keys.merge(options['navigation'])
-          child.add_metadata(page: options)
-          child
-        end
-        html.select!{|child| !child.metadata[:page]['navigation']['hidden']}
-        html.sort! {|a, b| a.metadata[:page]['navigation']['weight'] <=> b.metadata[:page]['navigation']['weight']}
+        visible = resource.children.select {|child| child.data.navigation.present?}
+        visible.select!{|child| !child.data.navigation[:hidden]}
+        visible.sort! {|a, b| a.data.navigation[:weight] <=> b.data.navigation[:weight]}
+        visible
       end
     end
   end

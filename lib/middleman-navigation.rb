@@ -1,5 +1,6 @@
 require 'middleman-navigation/tree'
 require 'middleman-navigation/resource_list_manipulator'
+require 'middleman-navigation/front_matter'
 require 'simple-navigation'
 require 'simple-navigation/adapters/sinatra-middleman'
 require 'simple-navigation/core/item'
@@ -7,6 +8,13 @@ SimpleNavigation::config_file_paths << File.expand_path("../simple-navigation", 
 
 module Middleman
   module Navigation
+    FRONTMATTER_DEFAULTS = {
+      hidden: false,
+      title: nil,
+      destination: nil,
+      weight: 0,
+    }.stringify_keys
+
     class << self
       def registered(app)
         # Make a reference to the app on our patched simple-navigation Sinatra 
