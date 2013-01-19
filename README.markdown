@@ -1,7 +1,9 @@
 This gem adds simple helpers to [Middleman](http://middlemanapp.com) static site generator 
 to add navigation menus and breadcrumbs.
 
-This version of the gem requires Middleman 3, and renders using [Simple Navigation](https://github.com/andi/simple-navigation) and its helpers.
+This version of the gem requires Middleman 3, and renders using [Simple Navigation](https://github.com/andi/simple-navigation) and its helpers. 
+
+*The implementation and options are significantly different from earlier versions!* If you'd like the old approach, see the tag for v0.2.
 
 # Installation
 
@@ -46,8 +48,10 @@ Example:
     Here you have the actual page source
 
 
-*hidden*: option explicitly remove the current page from it's parent menu. By default all pages with an underscore in the beginning or end of their source file name are hidden; 
-*weight*: is used to alter the order of the links in the navigation menu (the smaller the weight, the earlier the page will be listed *NOTE: this is the opposite of what the plugin used to do*);
-*title*: is used to set a custom title to menu, default to file name;
+*hidden*: option explicitly remove the current page from it's parent menu. By default all pages with an underscore in the beginning or end of their source file name are hidden
+
+*weight*: is used to alter the order of the links in the navigation menu (the smaller the weight, the earlier the page will be listed)
+
+*title*: is used to set a custom title to menu, default to file name
 
 
