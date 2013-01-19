@@ -1,4 +1,5 @@
 require 'middleman-navigation/tree'
+require 'middleman-navigation/resource_list_manipulator'
 require 'simple-navigation'
 require 'simple-navigation/adapters/sinatra-middleman'
 SimpleNavigation::config_file_paths << File.expand_path("../simple-navigation", __FILE__)
@@ -8,10 +9,8 @@ module Middleman
     class << self
       def registered(app)
         app.helpers SimpleNavigation::Helpers
-        # This is run for every page to allow for changes in development.
-        # TODO: Speed things up for deployment.
-        app.before do
-          Tree.build sitemap
+        app.ready do
+          sitemap.register_resource_list_manipulator :navigation, ResourceListManipulator.new(sitemap)
         end
       end
       alias :included :registered
