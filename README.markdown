@@ -7,17 +7,15 @@ This version of the gem requires Middleman 3, and renders using [Simple Navigati
 
 1. add the gem in your Gemfile:
 
-        gem "middleman-navigation"
+    gem "middleman-navigation"
 
 2. run bundler
 
-        bundle install
+    bundle install
 
 3. include it in your config.rb file
 
-        require middleman-navigation
-
-        activate :navigation
+    activate :navigation
 
 # Usage
 
