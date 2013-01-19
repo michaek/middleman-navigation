@@ -1,10 +1,12 @@
 module SimpleNavigation
   module Adapters
     class Sinatra < Base
+      cattr_accessor :middleman_app
+
       # Our request doesn't have a fullpath, so we must return path instead.
       def request_uri
-        # TODO: Respect app.http_prefix
-        '/' + request.path
+        @prefix ||= middleman_app.nil? ? '/' : middleman_app.inst.http_prefix
+        @prefix + request.path
       end
     end
   end

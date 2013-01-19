@@ -9,6 +9,10 @@ module Middleman
   module Navigation
     class << self
       def registered(app)
+        # Make a reference to the app on our patched simple-navigation Sinatra 
+        # adapter so we can use the app's settings for proper URLs.
+        SimpleNavigation::Adapters::Sinatra.middleman_app = app
+
         app.helpers SimpleNavigation::Helpers
         app.ready do
           sitemap.register_resource_list_manipulator :navigation, ResourceListManipulator.new(sitemap)
