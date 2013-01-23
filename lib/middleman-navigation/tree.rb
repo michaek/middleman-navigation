@@ -2,8 +2,8 @@ module Middleman
   module Navigation
     class Tree
       def self.build(sitemap)
-        app = sitemap.app
-        root_path = app.http_prefix + app.index_file
+        @app = sitemap.app
+        root_path = @app.http_prefix + @app.index_file
         root = sitemap.find_resource_by_destination_path root_path
 
         unless root.blank?
@@ -22,7 +22,7 @@ module Middleman
               title = child.data.navigation[:title] || child.data.title
               url = child.data.navigation[:destination] || child.url
 
-              level.item child.destination_path, title, url
+              level.item child.destination_path, title, url, :highlights_on => %r(#{url}(#{@app.index_file})?)
               traverse child, level
             end
           end
