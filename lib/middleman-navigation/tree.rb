@@ -3,12 +3,11 @@ module Middleman
     class Tree
       def self.build(sitemap)
         @app = sitemap.app
-        root_path = @app.http_prefix + @app.index_file
-        root = sitemap.find_resource_by_destination_path root_path
+        @root = sitemap.find_resource_by_destination_path @app.http_prefix+@app.index_file
 
-        unless root.blank?
+        unless @root.blank?
           SimpleNavigation::Configuration.run do |navigation|
-            traverse(root, navigation)
+            traverse(@root, navigation)
           end
         end
       end
@@ -18,11 +17,12 @@ module Middleman
 
         unless children.blank?
           navigation.items do |level|
-            children.each do |child|
-              title = child.data.navigation[:title] || child.data.title
-              url = child.data.navigation[:destination] || child.url
+            if resource == @root
+              add_navigation_node @root, level unless @root.data.navigation[:hidden]
+            end
 
-              level.item child.destination_path, title, url, :highlights_on => %r(#{url}(#{@app.index_file})?)
+            children.each do |child|
+              add_navigation_node child, level
               traverse child, level
             end
           end
@@ -34,6 +34,13 @@ module Middleman
         visible.select!{|child| !child.data.navigation[:hidden]}
         visible.sort! {|a, b| a.data.navigation[:weight] <=> b.data.navigation[:weight]}
         visible
+      end
+
+      def self.add_navigation_node(node, level)
+        title = node.data.navigation[:title] || node.data.title
+        url = node.data.navigation[:destination] || node.url
+
+        level.item node.destination_path, title, url, :highlights_on => %r(#{url}(#{@app.index_file})?)
       end
     end
   end
