@@ -54,4 +54,8 @@ Example:
 
 *title*: is used to set a custom title to menu, default to file name
 
+### Root Item
 
+The site root is now included by default in the navigation. If you'd like it to be hidden, you can set hidden to true in the frontmatter for the index page. Unlike other pages, the children of the hidden index page will still be visible!
+
+Because it seems like the most reasonable semantic HTML, the site root is included at the same level as its children, at the beginning of the list. That doesn't support using weight to sort, but that could change if it becomes desirable.
