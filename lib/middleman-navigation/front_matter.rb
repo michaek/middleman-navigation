@@ -1,6 +1,8 @@
 # This approach to defaults is gross, and it doesn't belong here!
 # TODO: There should be a way in middleman for extensions to provide frontmatter defaults.
 # TODO: Remove this when middleman supports that.
+require 'active_support/core_ext/module/aliasing'
+
 module Middleman::CoreExtensions
   module FrontMatter
     class FrontmatterManager

@@ -1,11 +1,13 @@
-module SimpleNavigation
-  class Item
+module Middleman::Navigation
+
+  module Item
     # We want simple-navigation to be forgetful about @selected.
-    def selected_with_forgetfulness?
-      is_selected = selected_without_forgetfulness?
+    def selected?
+      is_selected = super
       @selected = nil
       is_selected
     end
-    alias_method_chain :selected?, :forgetfulness
   end
+
+  ::SimpleNavigation::Item.send(:include, Item)
 end

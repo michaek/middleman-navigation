@@ -1,9 +1,12 @@
+require 'middleman-navigation/front_matter'
 require 'middleman-navigation/tree'
 require 'middleman-navigation/resource_list_manipulator'
-require 'middleman-navigation/front_matter'
+
 require 'simple-navigation'
 require 'simple-navigation/adapters/sinatra-middleman'
 require 'simple-navigation/core/item'
+
+
 SimpleNavigation::config_file_paths << File.expand_path("../simple-navigation", __FILE__)
 
 module Middleman
