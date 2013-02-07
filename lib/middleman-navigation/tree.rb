@@ -15,12 +15,12 @@ module Middleman
       def self.traverse(resource, navigation)
         children = visible_children(resource)
 
-        unless children.blank?
-          navigation.items do |level|
-            if resource == @root
-              add_navigation_node @root, level unless @root.data.navigation[:hidden]
-            end
+        navigation.items do |level|
+          if resource == @root
+            add_navigation_node @root, level unless @root.data.navigation[:hidden]
+          end
 
+          unless children.blank?
             children.each do |child|
               add_navigation_node child, level
               traverse child, level
