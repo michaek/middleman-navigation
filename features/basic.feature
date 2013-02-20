@@ -6,3 +6,9 @@ Feature: Simple flat navigation
     Then the Home menu item should be selected
     When I go to "/subpage.html"
     Then I should see "Subpage."
+    Then the Subpage menu item should be selected
+    Then the Another menu item should not be selected
+    When I go to "/another.html"
+    Then I should see "Subpage."
+    Then the Another menu item should be selected
+    Then the Subpage menu item should not be selected
