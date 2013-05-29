@@ -40,7 +40,7 @@ module Middleman
         title = node.data.navigation[:title] || node.data.title
         url = node.data.navigation[:destination] || node.url
 
-        level.item node.destination_path, title, url, :highlights_on => %r(#{url}(#{@app.index_file})?)
+        level.item node.destination_path, title, url, :highlights_on => %r(^#{url}(#{@app.index_file})?$)
       end
     end
   end
