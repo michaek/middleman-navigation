@@ -3,13 +3,15 @@ to add navigation menus and breadcrumbs.
 
 This version of the gem requires Middleman 3, and renders using [Simple Navigation](https://github.com/andi/simple-navigation) and its helpers. 
 
+**Until #8 is resolved, this gem is incompatible with Middleman >= 3.1.0.**
+
 *The implementation and options are significantly different from earlier versions!* If you'd like the old approach, see the tag for v0.2.
 
 # Installation
 
 1. add the gem in your Gemfile:
 
-      gem "middleman-navigation"
+      gem "middleman-navigation", "~> 3.0.14"
 
 2. run bundler
 
