@@ -1,4 +1,3 @@
-require 'middleman-navigation/front_matter'
 require 'middleman-navigation/tree'
 require 'middleman-navigation/resource_list_manipulator'
 
@@ -6,6 +5,7 @@ require 'simple-navigation'
 require 'simple-navigation/adapters/sinatra-middleman'
 require 'simple-navigation/core/item'
 
+require 'active_support/hash_with_indifferent_access'
 
 SimpleNavigation::config_file_paths << File.expand_path("../simple-navigation", __FILE__)
 
@@ -16,7 +16,7 @@ module Middleman
       title: nil,
       destination: nil,
       weight: 0,
-    }.stringify_keys
+    }.with_indifferent_access
 
     class << self
       def registered(app)

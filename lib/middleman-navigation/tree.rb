@@ -12,12 +12,18 @@ module Middleman
         end
       end
 
+      def self.with_defaults(navigation)
+        navigation = {} if navigation.blank?
+        Middleman::Navigation::FRONTMATTER_DEFAULTS.merge navigation
+      end
+
       def self.traverse(resource, navigation)
         children = visible_children(resource)
 
         navigation.items do |level|
           if resource == @root
-            add_navigation_node @root, level unless @root.data.navigation[:hidden]
+            options = with_defaults @root.data.navigation
+            add_navigation_node @root, level unless options[:hidden]
           end
 
           unless children.blank?
@@ -30,15 +36,16 @@ module Middleman
       end
 
       def self.visible_children(resource)
-        visible = resource.children.select {|child| child.data.navigation.present?}
-        visible.select!{|child| !child.data.navigation[:hidden]}
-        visible.sort! {|a, b| a.data.navigation[:weight] <=> b.data.navigation[:weight]}
+        visible = resource.children
+        visible.select!{|child| !with_defaults(child.data.navigation)[:hidden]}
+        visible.sort! {|a, b| with_defaults(a.data.navigation)[:weight] <=> with_defaults(b.data.navigation)[:weight]}
         visible
       end
 
       def self.add_navigation_node(node, level)
-        title = node.data.navigation[:title] || node.data.title
-        url = node.data.navigation[:destination] || node.url
+        options = with_defaults(node.data.navigation)
+        title = options[:title] || node.data.title
+        url = options[:destination] || node.url
 
         level.item node.destination_path, title, url, :highlights_on => %r(^#{url}(#{@app.index_file})?$)
       end

@@ -10,13 +10,13 @@ group :development do
 end
 
 group :test do
-  gem "middleman-core"
   gem "sinatra"
   gem "cucumber", "~> 1.2.0"
   gem "fivemat"
   gem "aruba",    "~> 0.4.11"
   gem "rspec",    "~> 2.7"
   gem "timecop",  "~> 0.4.0"
+  gem "kramdown"
   
   platforms :ruby do
     gem "redcarpet", "~> 2.1.1"

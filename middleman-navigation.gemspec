@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   
-  s.add_dependency("middleman-core", ["~> 3.0.1"])
+  s.add_dependency("middleman-core", ["~> 3.2.1"])
   s.add_dependency("simple-navigation", ["> 3.0.0"])
 
   s.add_development_dependency "activesupport", ["~> 3.2.6"]
