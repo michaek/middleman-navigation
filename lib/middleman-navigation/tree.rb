@@ -7,7 +7,9 @@ module Middleman
 
         unless @root.blank?
           SimpleNavigation::Configuration.run do |navigation|
-            traverse(@root, navigation)
+            navigation.items do |level|
+              traverse(@root, level)
+            end
           end
         end
       end
@@ -18,19 +20,13 @@ module Middleman
       end
 
       def self.traverse(resource, navigation)
-        children = visible_children(resource)
+        if resource == @root
+          add_navigation_node resource, navigation
+        end
 
-        navigation.items do |level|
-          if resource == @root
-            options = with_defaults @root.data.navigation
-            add_navigation_node @root, level unless options[:hidden]
-          end
-
-          unless children.blank?
-            children.each do |child|
-              add_navigation_node child, level
-              traverse child, level
-            end
+        visible_children(resource).each do |child|
+          add_navigation_node child, navigation do |subnav|
+            traverse child, subnav
           end
         end
       end
@@ -46,8 +42,11 @@ module Middleman
         options = with_defaults(node.data.navigation)
         title = options[:title] || node.data.title
         url = options[:destination] || node.url
-
-        level.item node.destination_path, title, url, :highlights_on => %r(^#{url}(#{@app.index_file})?$)
+        unless options[:hidden]
+          level.item node.destination_path, title, url, :highlights_on => %r(^#{url}(#{@app.index_file})?$) do |subnav|
+            yield(subnav) if block_given?
+          end
+        end
       end
     end
   end
