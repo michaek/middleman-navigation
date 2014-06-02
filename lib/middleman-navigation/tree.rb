@@ -3,7 +3,7 @@ module Middleman
     class Tree
       def self.build(sitemap)
         @app = sitemap.app
-        @root = sitemap.find_resource_by_destination_path @app.http_prefix+@app.index_file
+        @root = sitemap.find_resource_by_path @app.index_file
 
         unless @root.blank?
           SimpleNavigation::Configuration.run do |navigation|
